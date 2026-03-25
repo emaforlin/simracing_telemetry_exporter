@@ -46,5 +46,5 @@ bool Serial::write(const uint8_t *data, size_t length) {
   }
 
   DWORD bytes_writen;
-  return WriteFile(m_hSerial, data, sizeof(data), &bytes_writen, NULL);
+  return WriteFile(m_hSerial, data, length, &bytes_writen, NULL);
 }
