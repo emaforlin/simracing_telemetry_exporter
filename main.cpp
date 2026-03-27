@@ -19,7 +19,7 @@ int main() {
   std::cout << "Connected! Reading telemetry..." << std::endl;
 
   /* ── Serial Export ─────────────────────────────────────────────── */
-  Serial serial("COM1", 115200);
+  Serial serial("\\\\.\\COM5", 115200);
   if (!serial.isOpen()) {
     std::cerr << "Failed to open serial port" << std::endl;
     return 1;
@@ -146,7 +146,12 @@ int main() {
       }
       std::cout << std::dec << std::endl;
 
-      serial.write(pkt_buf, pkt_len);
+      if (!serial.write(pkt_buf, pkt_len)) {
+        std::cerr << "Failed to write to serial port" << std::endl;
+        return 1;
+      } else {
+        std::cout << "Sent " << pkt_len << " bytes to serial port" << std::endl;
+      }
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
